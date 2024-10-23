@@ -1,0 +1,194 @@
+/* CSS Reset */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    font-family: "Poppins";
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/* end reset */
+
+
+body {
+    background-color: #d1b463;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 14px 14px 0 0 black;
+    margin-top: 10px;
+}
+
+.startGame {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(1, 100px);
+}
+
+.startGame .card {
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.card {
+    text-align: center;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.card div {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    color: #78c1f3;
+    background: white;
+    border-radius: 10px;
+    transition: all 500ms ease-out;
+    backface-visibility: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+}
+
+.startGame button {
+    cursor: pointer;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    background: #78c1f3;
+}
+
+.startGame .card.active div {
+    border: 2px solid #78c1f3;
+}
+
+.card .back {
+    transform: rotateY(-180deg);
+}
+
+.startGame .card:hover .front,
+.card.flip .front {
+    transform: rotateY(180deg)
+}
+
+.startGame .card:hover .back,
+.card.flip .back {
+    transform: rotateY(0deg);
+}
+
+.fa-repeat {
+    font-size: 25px;
+    margin-top: 1.5rem;
+    cursor: pointer;
+}
+
+
+.playground {
+    display: grid;
+    gap: 20px;
+    display: none;
+}
+
+.card.shake {
+    animation: shake 0.35s ease-in-out;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-13px);
+    }
+
+    40% {
+        transform: translateX(13px);
+    }
+
+    60% {
+        transform: translateX(-8px);
+    }
+
+    80% {
+        transform: translateX(8px);
+    }
+}
+
+.card.match {
+    animation: rubberBand 1s linear forwards;
+}
+
+@keyframes rubberBand {
+    0% {
+        transform: scaleX(1);
+    }
+
+    40% {
+        transform: scaleX(1.12) scaleY(0.75);
+    }
+
+    55% {
+        transform: scaleX(0.85) scaleY(1);
+    }
+
+    65% {
+        transform: scaleX(1.09) scaleY(0.85);
+    }
+
+    75% {
+        transform: scaleX(0.9) scaleY(1);
+    }
+
+    90% {
+        transform: scaleX(1.05) scaleY(0.95);
+    }
+
+    100% {
+        transform: scaleX(1) scaleY(1)
+    }
+}
