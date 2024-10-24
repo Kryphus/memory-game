@@ -2,7 +2,10 @@ const startGameContainer = document.querySelector(".startGame"),
     startGameCards = document.querySelectorAll(".startGame .card"),
     startGame = document.querySelector(".startGame button"),
     playground = document.querySelector(".playground"),
-    faRepeat = document.querySelector(".fa-repeat");
+    faRepeat = document.querySelector(".new-game");
+header = document.querySelector("header");
+scoreBoard = document.querySelector(".scoreBoard");
+winnerBanner = document.querySelector(".winner-banner")
 
 
 let levels = 2,
@@ -12,6 +15,10 @@ let levels = 2,
     cardOne,
     cardTwo,
     IsPreventClick = true;
+
+let timeElapsed = 0,
+    moves = 0,
+    timerInterval;
 
 startGameCards.forEach((element) => {
     element.addEventListener("click", (e) => {
@@ -32,23 +39,30 @@ startGameCards.forEach((element) => {
 startGame.addEventListener("click", (e) => {
     startGameContainer.style.display = "none";
     playground.style.display = "grid";
-    playground.style.gridTemplateColumns = `repeat(${columns}, 100px)`;
-    playground.style.gridTemplateRows = `repeat(${rows}, 100px)`;
+    playground.style.gridTemplateColumns = `repeat(${columns}, 150px)`;
+    playground.style.gridTemplateRows = `repeat(${rows}, 180px)`;
+    header.style.display = "none";
+    scoreBoard.style.display = "flex";
+    scoreBoard.classList.remove('hidden');
 
+    moves = 0;
+    document.getElementById('moves').textContent = moves;
+    resetTimer();
+    startTimer();
 
     createCards();
 });
 
 function createCards() {
     const cardArr = [
-        "house",
-        "bomb",
-        "poo",
-        "gift",
-        "egg",
-        "dragon",
-        "person-biking",
-        "jet-fighter-up",
+        "img/baron033.jpg",
+        "img/chihiro019.jpg",
+        "img/howl014.jpg",
+        "img/kazetachinu014.jpg",
+        "img/kimitachi015.jpg",
+        "img/ponyo036.jpg",
+        "img/totoro030.jpg",
+        "img/umi002.jpg"
     ];
     shuffleArray(cardArr);
     shuffleCards([...cardArr.slice(0, levels), ...cardArr.slice(0, levels)])
@@ -61,7 +75,7 @@ const shuffleArray = (array) => {
         array[i] = array[j];
         array[j] = temp;
 
- 
+
     }
 }
 
@@ -72,8 +86,12 @@ function shuffleCards(cards) {
     for (let i = 0; i < cards.length; i++) {
         playground.innerHTML += `
         <div class="card" onclick = 'flipCard(this)'>
-            <div class="front"><i class = "fa-solid fa-question"></i></div>
-            <div class="back"><i class = "fa-solid fa-${cards[i]}"></i></div>
+            <div class="front">
+                <img src="./img/back.png" alt="Card back" />
+            </div>
+            <div class="back">
+                <img src="${cards[i]}" alt="Memory card" />
+            </div>
         </div>
         `;
     }
@@ -92,6 +110,9 @@ function flipCard(card) {
         cardTwo = card;
         IsPreventClick = false;
 
+        moves++;
+        document.getElementById('moves').textContent = moves;
+
         let cardOneValue = cardOne.querySelector(".back").innerHTML,
             cardTwoValue = cardTwo.querySelector(".back").innerHTML
         matchCards(cardOneValue, cardTwoValue);
@@ -103,10 +124,19 @@ function matchCards(cardOneValue, cardTwoValue) {
     if (cardOneValue == cardTwoValue) {
 
         matched++;
-        if(matched == levels) {
+        if (matched == levels) {
+
             setTimeout(() => {
-                alert("Congratulations! You won!")
+                winnerBanner.classList.remove('hidden');
+
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }  // 0.6 is better than 1.2 as it starts from middle of screen
+                });
             }, 500)
+            clearInterval(timerInterval)
+
         }
 
         cardOne.classList.add("match");
@@ -137,6 +167,38 @@ faRepeat.addEventListener("click", () => {
     startGameContainer.style.display = "grid";
     playground.style.display = "none";
     faRepeat.style.display = "none";
+    header.style.display = "flex";
+    scoreBoard.classList.add('hidden');
+    winnerBanner.classList.add('hidden');
 
-    (matched = 0), (cardOne = ""), (CardTwo = ""), (IsPreventClick = true)
+    clearInterval(timerInterval);
+    moves = 0;
+    timeElapsed = 0;
+    document.getElementById('moves').textContent = moves;
+    document.getElementById('time').textContent = "0:00";
+
+    (matched = 0), (cardOne = ""), (cardTwo = ""), (IsPreventClick = true)
 })
+
+//Timer and moves functionality
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timeElapsed++;
+        updateTimer();
+    }, 1000);
+}
+
+function updateTimer() {
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    document.getElementById('time').textContent = formattedTime;
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    timeElapsed = 0;
+    updateTimer();
+}
+

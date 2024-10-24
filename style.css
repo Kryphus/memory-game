@@ -1,5 +1,7 @@
 /* CSS Reset */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Poppins:wght@400;500;600&display=swap');
+
 
 *,
 *::before,
@@ -43,19 +45,23 @@ h6 {
 
 
 body {
-    background-color: #d1b463;
+    /* background-color: rgb(254, 253, 245); */
+    background: url('./img/bg-body.jpg');
+    background-size: cover;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+
 }
 
 .container {
-    background-color: white;
+    background-color: rgba(248, 246, 246, 0.705);
     border-radius: 10px;
     padding: 25px;
-    box-shadow: 14px 14px 0 0 black;
+    box-shadow: 14px 14px 0 0 rgb(105, 104, 104);
     margin-top: 10px;
 }
 
@@ -81,7 +87,7 @@ body {
     width: 100px;
     height: 100px;
     line-height: 100px;
-    color: #78c1f3;
+    color: #373a3b;
     background: white;
     border-radius: 10px;
     transition: all 500ms ease-out;
@@ -98,11 +104,11 @@ body {
     border-radius: 5px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     color: white;
-    background: #78c1f3;
+    background: hsla(133, 23%, 35%, 0.89);
 }
 
 .startGame .card.active div {
-    border: 2px solid #78c1f3;
+    border: 2px solid hsla(0, 0%, 0%, 0.39);
 }
 
 .card .back {
@@ -119,7 +125,7 @@ body {
     transform: rotateY(0deg);
 }
 
-.fa-repeat {
+.new-game {
     font-size: 25px;
     margin-top: 1.5rem;
     cursor: pointer;
@@ -128,8 +134,9 @@ body {
 
 .playground {
     display: grid;
-    gap: 20px;
+    gap: 10px;
     display: none;
+    padding: 5px;
 }
 
 .card.shake {
@@ -137,6 +144,7 @@ body {
 }
 
 @keyframes shake {
+
     0%,
     100% {
         transform: translateX(0);
@@ -191,4 +199,130 @@ body {
     100% {
         transform: scaleX(1) scaleY(1)
     }
+}
+
+/* adds */
+
+
+/* Target cards in startGame */
+.startGame .front,
+.startGame .back {
+    height: 100px;
+    width: 100px;
+}
+
+/* Target cards in the playground */
+.playground .card .front,
+.playground .card .back {
+    height: 180px;
+    width: 150px;
+}
+
+.playground .card .front img,
+.playground .card .back img {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+
+h3 {
+    font-family: "Darumadrop One", sans-serif;
+    font-size: 3rem;
+    margin-top: -20px;
+    ;
+    color: rgb(36, 35, 35);
+}
+
+.scoreBoard {
+    background-color: white;
+    height: 400px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 30px;
+    margin-top: 10px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    opacity: 80%;
+}
+
+.parent {
+    display: flex;
+    gap: 40px;
+
+}
+
+.scoreBoard .time {
+    margin-top: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.scoreBoard button {
+    cursor: pointer;
+    height: 50px;
+    width: 150px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    background: hsl(133, 20%, 32%);
+    font-size: 1.2rem;
+    margin-top: 6.5rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* winner banner */
+
+.scoreBoard {
+    position: relative;
+}
+
+.winner-banner {
+   
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    padding: 10px 40px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    /* background-color: rgba(248, 246, 246, 0.705); */
+    z-index: 1;
+    width: 250px;
+    text-align: center;
+} 
+
+.winner-banner p {
+    font-family: "Darumadrop One", sans-serif;
+    font-size: 2rem;
+}
+
+
+
+button:hover {
+    background: hsl(133, 20%, 45%);
+}
+
+.win-cards {
+    opacity: 50%;
 }
